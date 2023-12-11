@@ -1,7 +1,7 @@
 {
     "name": "@kehwar/nuxt-casl-auto",
     "type": "module",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "CASL integration for Nuxt",
     "license": "MIT",
     "repository": "kehwar/nuxt-casl-auto",
