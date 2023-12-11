@@ -1,4 +1,4 @@
-import { addImportsDir, addServerImportsDir, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addImports, addServerImports, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import fg from 'fast-glob'
 import _ from 'lodash'
 import { DefaultModuleOptions, type Options } from './runtime/options'
@@ -56,7 +56,15 @@ export default defineNuxtModule({
         })
 
         // Add imports
-        addImportsDir(resolver.resolve('./casl-auto'))
-        addServerImportsDir(resolver.resolve('./casl-auto'))
+        addImports([
+            { name: 'defineCaslAbility', from: resolver.resolve('casl-auto/utils') },
+            { name: 'defineCaslCRUDAbility', from: resolver.resolve('casl-auto/utils') },
+            { name: 'getCaslAbility', from: resolver.resolve('casl-auto/ability') },
+        ])
+        addServerImports([
+            { name: 'defineCaslAbility', from: resolver.resolve('casl-auto/utils') },
+            { name: 'defineCaslCRUDAbility', from: resolver.resolve('casl-auto/utils') },
+            { name: 'getCaslAbility', from: resolver.resolve('casl-auto/ability') },
+        ])
     },
 })
