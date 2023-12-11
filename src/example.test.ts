@@ -6,7 +6,6 @@ import type { LiteralUnion, OmitIndexSignature, PartialDeep, Paths } from 'type-
 import _ from 'lodash'
 import { expect, it } from 'vitest'
 import { guard } from '@ucast/mongo2js'
-import type { DistributeFlatArray } from './types/distribute'
 
 type CRUD = 'create' | 'read' | 'update' | 'delete'
 type CaslModel<TName extends string, TObject extends object> = PartialDeep<TObject> & { __typename: TName, [key: PropertyKey]: unknown }
@@ -19,6 +18,7 @@ type DetalleDeComision = CaslCRUDAbility<'DetalleDeComision', {
     role: string
 }>
 
+type DistributeFlatArray<A> = A extends [infer H, ...infer T] ? (H extends H ? [H, ...DistributeFlatArray<T>] : never) : []
 type AppAbility = DistributeFlatArray<DetalleDeComision>
 
 type Actions = AppAbility[0]
