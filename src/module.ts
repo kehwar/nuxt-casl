@@ -9,7 +9,7 @@ import { getUtilsTemplate } from './templates/get-utils-template'
 export default defineNuxtModule({
     meta: {
         name: '@kehwar/nuxt-casl-auto',
-        configKey: 'caslAuto',
+        configKey: 'casl',
     },
 
     defaults: DefaultModuleOptions,
