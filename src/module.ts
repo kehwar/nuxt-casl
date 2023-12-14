@@ -42,29 +42,29 @@ export default defineNuxtModule({
 
         // Add templates
         addTemplate({
-            filename: 'casl-auto/utils.ts',
+            filename: 'casl/utils.ts',
             write: true,
             getContents: () => getUtilsTemplate(),
         })
         addTemplate({
-            filename: 'casl-auto/ability.ts',
+            filename: 'casl/ability.ts',
             write: true,
             getContents: () => getAbilityTemplate(parsedPaths),
         })
         nuxt.hook('prepare:types', (options) => {
-            options.tsConfig.include?.unshift('./casl-auto')
+            options.tsConfig.include?.unshift('./casl')
         })
 
         // Add imports
         addImports([
-            { name: 'defineCaslAbility', from: resolver.resolve('casl-auto/utils') },
-            { name: 'defineCaslCRUDAbility', from: resolver.resolve('casl-auto/utils') },
-            { name: 'getCaslAbility', from: resolver.resolve('casl-auto/ability') },
+            { name: 'defineCaslAbility', from: resolver.resolve('casl/utils') },
+            { name: 'defineCaslCRUDAbility', from: resolver.resolve('casl/utils') },
+            { name: 'getCaslAbility', from: resolver.resolve('casl/ability') },
         ])
         addServerImports([
-            { name: 'defineCaslAbility', from: resolver.resolve('casl-auto/utils') },
-            { name: 'defineCaslCRUDAbility', from: resolver.resolve('casl-auto/utils') },
-            { name: 'getCaslAbility', from: resolver.resolve('casl-auto/ability') },
+            { name: 'defineCaslAbility', from: resolver.resolve('casl/utils') },
+            { name: 'defineCaslCRUDAbility', from: resolver.resolve('casl/utils') },
+            { name: 'getCaslAbility', from: resolver.resolve('casl/ability') },
         ])
     },
 })
