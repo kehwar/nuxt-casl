@@ -25,9 +25,13 @@ export function getAbilityTemplate(paths: ParsedPath[]) {
         type GetPathsForSubject<TSubject extends Subjects> = Paths<Omit<OmitIndexSignature<GetModel<TSubject>>, '__typename'>>
         type RawRule = RawRuleFrom<AppAbility, MongoQuery> & { scope?: unknown }
 
-        export function getCaslAbility(jsonRules: string[], meta?: any) {
+        export function getCaslAbility(rawRules: (string | RawRule | RawRule[])[], meta?: any) {
             // Compile rules with lodash template and parse with JSON
-            const rules: RawRule[] = jsonRules.flatMap(rule => JSON.parse(_.template(rule)(meta)))
+            const rules = rawRules.flatMap(rule => {
+                if (typeof rule === 'string')
+                    return JSON.parse(_.template(rule)(meta)) as RawRule[]
+                return rule
+            })
 
             // Filter rules by scope
             const scopedRules = rules.filter(rule => rule.scope == null || guard(rule.scope)(meta))
@@ -46,11 +50,14 @@ export function getAbilityTemplate(paths: ParsedPath[]) {
             }
 
             return {
-                rules,
-                scopedRules,
                 ability,
                 can,
                 cannot,
+                rules: scopedRules,
+                debug: {
+                    unescopedRules: rules,
+                    rawRules,
+                }
             }
         }
     `
