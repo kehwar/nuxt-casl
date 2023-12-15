@@ -34,7 +34,7 @@ export function getAbilityTemplate(paths: ParsedPath[]) {
             })
 
             // Filter rules by scope
-            const scopedRules = rules.filter(rule => rule.scope == null || guard(rule.scope)(meta))
+            const scopedRules = meta != null ? rules.filter(rule => rule.scope == null || guard(rule.scope)(meta)) : rules
 
             // Define CASL Ability
             const ability = createMongoAbility<AppAbility>(scopedRules, {
