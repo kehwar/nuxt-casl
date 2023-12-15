@@ -13,7 +13,7 @@ export function getAbilityTemplate(paths: ParsedPath[]) {
 
         type DistributeFlatArray<A> = A extends [infer H, ...infer T] ? (H extends H ? [H, ...DistributeFlatArray<T>] : never) : []
 
-        type AppAbility = DistributeFlatArray<${paths.map(({ importName }) => `typeof ${importName}`).join(' | ')}>
+        type AppAbility = ${paths.length === 0 ? 'any' : `DistributeFlatArray<${paths.map(({ importName }) => `typeof ${importName}`).join(' | ')}>`}
 
         type Actions = AppAbility[0]
         type Subjects = AppAbility[1]
@@ -38,10 +38,10 @@ export function getAbilityTemplate(paths: ParsedPath[]) {
             })
 
             // Create helper functions with better type inference
-            function can<TAction extends Actions, TSubject extends SubjectsForAction<TAction>>(action: TAction, subject: TSubject, field?: LiteralUnion<GetPathsForSubject<TSubject>, string>): boolean {
+            function can<TAction extends Actions, TSubject extends SubjectsForAction<TAction>>(action: TAction, subject?: TSubject, field?: LiteralUnion<GetPathsForSubject<TSubject>, string>): boolean {
                 return ability.can(action, subject as any, field as any)
             }
-            function cannot<TAction extends Actions, TSubject extends SubjectsForAction<TAction>>(action: TAction, subject: TSubject, field?: LiteralUnion<GetPathsForSubject<TSubject>, string>): boolean {
+            function cannot<TAction extends Actions, TSubject extends SubjectsForAction<TAction>>(action: TAction, subject?: TSubject, field?: LiteralUnion<GetPathsForSubject<TSubject>, string>): boolean {
                 return ability.cannot(action, subject as any, field as any)
             }
 

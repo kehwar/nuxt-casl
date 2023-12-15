@@ -12,11 +12,11 @@ export function getUtilsTemplate() {
 
         type CaslCRUDAbility<TName extends string, TObject extends object> = CaslAbility<CRUD, TName, TObject>
 
-        export function defineCaslAbility<TActions extends LiteralUnion<CRUD, string>, TName extends string, TObject extends object>() {
+        export function defineCaslAbility<TActions extends LiteralUnion<CRUD, string>, TName extends string = 'all', TObject extends object = {}>() {
             return undefined as unknown as CaslAbility<TActions, TName, TObject>
         }
 
-        export function defineCaslCRUDAbility<TName extends string, TObject extends object>() {
+        export function defineCaslCRUDAbility<TName extends string = 'all', TObject extends object = {}>() {
             return undefined as unknown as CaslCRUDAbility<TName, TObject>
         }
     `
